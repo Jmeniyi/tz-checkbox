@@ -16,7 +16,7 @@
                         </div>
                         <div class="right-block">
                             <input type="number" min=0 id="numberPick" v-model="item.countSquare" />
-                            <input type="color" id="colorPick" v-model="item.color" />
+                            <input type="color" id="colorPick" v-model="item.color" @input="updateColor" />
                         </div>
                     </li>
                 </ul>
@@ -39,7 +39,14 @@ export default {
             selectedList: null,
         }
     },
-    computed: {
+    mounted() {
+        this.lists.forEach(list => {
+            list.items.forEach(item => {
+                item.countSquare = Math.floor(Math.random() * 15) + 1;
+                item.color = this.getRandomColor();
+            });
+        });
+
     },
     methods: {
         toggleList(list) {
@@ -53,6 +60,14 @@ export default {
         },
         checkAllItems(list) {
             return list.items.every(item => item.checked);
+        },
+        getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
         }
     }
 }
