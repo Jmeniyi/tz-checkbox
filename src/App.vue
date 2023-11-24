@@ -1,74 +1,31 @@
 <template>
   <div class="app">
-      <leftSideBarComponentLV :lists="lists" />
+      <leftSideBarComponentLV/>
     <div>
-      <rightSideBarComponentLV :lists="lists" />
+      <rightSideBarComponentLV/>
     </div>
   </div>
 </template>
 
 <script>
-//import leftSideBarComponentSV from './components/supremeVersion/leftSideBarComponentSV.vue'
-//import rightSideBarComponentSV from './components/supremeVersion/rightSideBarComponentSV.vue'
+import { store } from './store';
 import leftSideBarComponentLV from './components/lightVersion/leftSideBarComponentLV.vue'
 import rightSideBarComponentLV from './components/lightVersion/rightSideBarComponentLV.vue'
 export default {
   name: 'App',
+  store,
   components: {
     leftSideBarComponentLV,
     rightSideBarComponentLV
   },
   data() {
     return {
-      lists: [
-        {
-          items: [
-            { id: 1, checked: false, countSquare: 0, color: '' },
-            { id: 2, checked: false, countSquare: 0, color: '' },
-            { id: 3, checked: false, countSquare: 0, color: '' },
-            { id: 4, checked: false, countSquare: 0, color: '' },
-            { id: 5, checked: false, countSquare: 0, color: '' }
-          ]
-        },
-        {
-          items: [
-            { id: 1, checked: false, countSquare: 0, color: '' },
-            { id: 2, checked: false, countSquare: 0, color: '' },
-            { id: 3, checked: false, countSquare: 0, color: '' },
-            { id: 4, checked: false, countSquare: 0, color: '' },
-            { id: 5, checked: false, countSquare: 0, color: '' }
-          ]
-        },
-        {
-          items: [
-            { id: 1, checked: false, countSquare: 0, color: '' },
-            { id: 2, checked: false, countSquare: 0, color: '' },
-            { id: 3, checked: false, countSquare: 0, color: '' },
-            { id: 4, checked: false, countSquare: 0, color: '' },
-            { id: 5, checked: false, countSquare: 0, color: '' }
-          ]
-        },
-        {
-          items: [
-            { id: 1, checked: false, countSquare: 0, color: '' },
-            { id: 2, checked: false, countSquare: 0, color: '' },
-            { id: 3, checked: false, countSquare: 0, color: '' },
-            { id: 4, checked: false, countSquare: 0, color: '' },
-            { id: 5, checked: false, countSquare: 0, color: '' }
-          ]
-        },
-        {
-          items: [
-            { id: 1, checked: false, countSquare: 0, color: '' },
-            { id: 2, checked: false, countSquare: 0, color: '' },
-            { id: 3, checked: false, countSquare: 0, color: '' },
-            { id: 4, checked: false, countSquare: 0, color: '' },
-            { id: 5, checked: false, countSquare: 0, color: '' }
-          ]
-        }
-      ]
-    };
+    
   }
+},
+mounted(){
+  this.$store.commit('fillRandomValues');
+}
 }
 </script>
 
@@ -77,7 +34,6 @@ export default {
   margin: 0px;
   padding: 0px;
 }
-
 .app {
   display: flex;
 }

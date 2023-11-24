@@ -1,25 +1,39 @@
 <template>
   <div class="rightSideBarComponentLV">
-    <div class="rightSideBarComponentLV__containerLists" v-for="(list, id) in lists" :key="id">
-      <div class="rightSideBarComponentLV__containerLists-head" @click="toggleList(list)">
+    <div
+      class="rightSideBarComponentLV__containerLists"
+      v-for="(list, id) in this.$store.state.listsArray"
+      :key="id"
+    >
+      <div class="rightSideBarComponentLV__containerLists-head">
         <span> list {{ id + 1 }}</span>
         <button @click="sortOrShuffle(id)">
           {{ buttonText }}
         </button>
       </div>
-      <div v-if="list === selectedList">
+      <div>
         <div v-if="showShuffleList">
-          <div class="arrayShuffle" v-for="(item, index) in shuffleArray(list)" :key="index"
-            :style="{ backgroundColor: item.color }">
-          </div>
+          <div
+            class="arrayShuffle"
+            v-for="(item, index) in shuffleArray(list)"
+            :key="index"
+            :style="{ backgroundColor: item.color }"
+          ></div>
         </div>
         <div v-else>
-          <div v-for="(item, index) in filteredItems(selectedList).sort((a, b) => a.countSquare - b.countSquare)"
-            :key="index">
+          <div
+            v-for="(item, index) in filteredItems(list).sort(
+              (a, b) => a.countSquare - b.countSquare
+            )"
+            :key="index"
+          >
             <ul>
-              <li class="arraySorted" v-for="(square, squareIndex) in item.countSquare" :key="squareIndex"
-                :style="{ backgroundColor: item.color }">
-              </li>
+              <li
+                class="arraySorted"
+                v-for="(square, squareIndex) in item.countSquare"
+                :key="squareIndex"
+                :style="{ backgroundColor: item.color }"
+              ></li>
             </ul>
           </div>
         </div>
@@ -29,27 +43,25 @@
 </template>
 
 <script>
-export default ({
+export default {
   name: "rightSideBarComponentLV",
   props: {
     lists: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
-      buttonText: 'Перемешать',
-      selectedList: null,
+      buttonText: "Перемешать",
       showShuffleList: false,
-      buttonDisabled:true
+      buttonDisabled: true,
     };
   },
   computed: {
     filteredItems() {
       return (list) => {
-        return (list.items ?? [])
-          .filter((item) => item.checked === true)
+        return (list.items ?? []).filter((item) => item.checked === true);
       };
     },
     shuffleArray() {
@@ -58,20 +70,22 @@ export default ({
         if (this.showShuffleList) {
           return this.shuffle(
             filteredArray
-              .map((item) => Array.from({ length: item.countSquare }, () => item))
+              .map((item) =>
+                Array.from({ length: item.countSquare }, () => item)
+              )
               .flat()
           );
-      }
-    }
+        }
+      };
     },
   },
   methods: {
     sortOrShuffle() {
       this.showShuffleList = !this.showShuffleList;
       if (this.showShuffleList) {
-        this.buttonText = 'Сортировать';
+        this.buttonText = "Сортировать";
       } else {
-        this.buttonText = 'Перемешать';
+        this.buttonText = "Перемешать";
       }
     },
     toggleList(list) {
@@ -91,9 +105,8 @@ export default ({
 
       return array;
     },
-},
-
-})
+  },
+};
 </script>
 
 <style scoped>
